@@ -1,16 +1,12 @@
-import styled from "styled-components";
+import { styled } from "styled-components";
 import GlobalStyles from "./styles/GlobalStyles";
 import Button from "./ui/Button";
 import Input from "./ui/Input";
+import Heading from "./ui/Heading";
+import Row from "./ui/Row";
 
-const H1 = styled.h1`
-  font-size: 30px;
-  font-weight: 600;
-`;
-
-const StyledApp = styled.div`
+const StyledApp = styled.main`
   padding: 20px;
-  background-color: orangered;
 `;
 
 export default function App() {
@@ -18,10 +14,29 @@ export default function App() {
     <>
       <GlobalStyles />
       <StyledApp>
-        <H1>The Wild Oasis</H1>
-        <Button onClick={() => console.log("check in")}>Check in</Button>
-        <Button onClick={() => console.log("check out")}>Check out</Button>
-        <Input type="number" placeholder="Number of guests" />
+        <Row>
+          <Row type="horizontal">
+            <Heading as="h1">The Wild Oasis</Heading>
+            <div>
+              <Heading as="h2">check in and out</Heading>
+              <Button onClick={() => console.log("check in")}>Check in</Button>
+              <Button
+                variation="secondary"
+                size="small"
+                onClick={() => console.log("check out")}
+              >
+                Check out
+              </Button>
+            </div>
+          </Row>
+          <Row>
+            <Heading as="h3">Forms</Heading>
+            <form>
+              <Input type="number" placeholder="Number of guests" />
+              <Input type="number" placeholder="Number of guests" />
+            </form>
+          </Row>
+        </Row>
       </StyledApp>
     </>
   );
