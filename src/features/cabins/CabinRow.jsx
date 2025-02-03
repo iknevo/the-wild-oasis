@@ -1,4 +1,8 @@
+/* eslint-disable react/prop-types */
 import styled from "styled-components";
+import { formatCurrency } from "./../../utils/helpers.js";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { deleteCabin } from "../../services/apiCabins.js";
 
 const TableRow = styled.div`
   display: grid;
@@ -38,3 +42,40 @@ const Discount = styled.div`
   font-weight: 500;
   color: var(--color-green-700);
 `;
+
+export default function CabinRow({ cabin }) {
+  const {
+    name,
+    id: cabinID,
+    maxCapacity,
+    regularPrice,
+    discount,
+    image,
+  } = cabin;
+
+  const queryClient = useQueryClient();
+  const { mutate, isLoading: isDeleting } = useMutation({
+    mutationFn: deleteCabin,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["cabins"],
+      });
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+
+  return (
+    <TableRow role="row">
+      <Img src={image} />
+      <Cabin>{name}</Cabin>
+      <div>Fits up to {maxCapacity} guests</div>
+      <Price>{formatCurrency(regularPrice)}</Price>
+      <Discount>{formatCurrency(discount)}</Discount>
+      <button onClick={() => mutate(cabinID)} disabled={isDeleting}>
+        {!isDeleting ? "Delete" : "Deleting ..."}
+      </button>
+    </TableRow>
+  );
+}
