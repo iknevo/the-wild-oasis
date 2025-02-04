@@ -2,7 +2,6 @@ import { useQuery } from "@tanstack/react-query";
 import { getCabins } from "../../services/apiCabins";
 import styled from "styled-components";
 import Spinner from "./../../ui/Spinner";
-import { partialMatchKey } from "./../../../node_modules/@tanstack/query-core/src/utils";
 import CabinRow from "./CabinRow";
 
 const Table = styled.div`
