@@ -11,12 +11,12 @@ export async function getCabins() {
 
 export async function createEditCabin(newCabin, id) {
   // https://hxyuutkgtgcugaxwuhrc.supabase.co/storage/v1/object/public/cabin-images//cabin-001.jpg
-  const hasImageUrl = newCabin.image?.startsWith?.(supabaseUrl);
+  const hasImage = newCabin.image?.startsWith?.(supabaseUrl);
   const imageName = `${Math.random()}-${newCabin.image.name}`.replaceAll(
     "/",
     ""
   );
-  const imagePath = hasImageUrl
+  const imagePath = hasImage
     ? newCabin.image
     : `${supabaseUrl}/storage/v1/object/public/cabin-images/${imageName}`;
 
@@ -35,6 +35,9 @@ export async function createEditCabin(newCabin, id) {
     throw new Error("Cabin could not be created");
   }
 
+  // if there is already an image we don't need to upload a new one
+  // if (hasImage) return data;
+
   // 2. Upload image
   const { error: storageError } = await supabase.storage
     .from("cabin-images")
@@ -43,8 +46,6 @@ export async function createEditCabin(newCabin, id) {
   // 3. Delete cabin if there was an error uploading image
   if (storageError) {
     await supabase.from("cabins").delete().eq("id", data.id);
-
-    console.error(storageError);
     throw new Error(
       "Cabin Image couldn't be uploaded and the cabin was not created"
     );
@@ -54,7 +55,6 @@ export async function createEditCabin(newCabin, id) {
 }
 
 export async function deleteCabin(id) {
-  await deleteCabinImage(id);
   const { data: cabins, error } = await supabase
     .from("cabins")
     .delete()
@@ -65,20 +65,4 @@ export async function deleteCabin(id) {
   }
 
   return cabins;
-}
-
-async function deleteCabinImage(id) {
-  const selectedCabin = await (
-    await getCabins()
-  ).find((cabin) => cabin.id === id);
-
-  const path = selectedCabin.image.replace(supabaseUrl, "");
-  const filePathArray = path.split("/");
-  const fileName = filePathArray.slice(-1).at(0);
-  const { error } = await supabase.storage
-    .from("cabin-images")
-    .remove([fileName]);
-  if (error) {
-    throw new Error("Could not delete the image from the buckets");
-  }
 }
