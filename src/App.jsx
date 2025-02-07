@@ -13,6 +13,13 @@ const queryClient = new QueryClient({
   },
 });
 
+function shouldForwardProp(propName, target) {
+  if (typeof target === "string") {
+    return isPropValid(propName);
+  }
+  return true;
+}
+
 export default function App() {
   return (
     <StyleSheetManager shouldForwardProp={shouldForwardProp}>
@@ -43,11 +50,4 @@ export default function App() {
       </QueryClientProvider>
     </StyleSheetManager>
   );
-}
-
-function shouldForwardProp(propName, target) {
-  if (typeof target === "string") {
-    return isPropValid(propName);
-  }
-  return true;
 }
