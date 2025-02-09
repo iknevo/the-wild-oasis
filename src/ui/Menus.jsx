@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { HiEllipsisVertical } from "react-icons/hi2";
 import styled from "styled-components";
@@ -71,13 +71,22 @@ const MenusContext = createContext();
 
 function Menus({ children }) {
   const [openId, setOpenId] = useState("");
-  const [position, setPosition] = useState(null);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [buttonRef, setButtonRef] = useState(null);
 
   const close = () => setOpenId("");
   const open = setOpenId;
   return (
     <MenusContext.Provider
-      value={{ openId, close, open, position, setPosition }}
+      value={{
+        openId,
+        close,
+        open,
+        position,
+        setPosition,
+        buttonRef,
+        setButtonRef,
+      }}
     >
       {children}
     </MenusContext.Provider>
@@ -85,27 +94,51 @@ function Menus({ children }) {
 }
 
 function Toogle({ id }) {
-  const { openId, close, open, setPosition } = useContext(MenusContext);
-  // const ref = useOutsideClick(close);
+  const { openId, close, open, setPosition, setButtonRef } =
+    useContext(MenusContext);
+  const ref = useRef(null);
+
   function handleClick(e) {
     const rect = e.target.closest("button").getBoundingClientRect();
     setPosition({
       x: window.innerWidth - rect.width - rect.x,
       y: rect.y + rect.height + 8,
     });
+    setButtonRef(ref);
     openId === "" || openId !== id ? open(id) : close();
   }
 
   return (
-    <StyledToggle onClick={handleClick}>
+    <StyledToggle onClick={handleClick} ref={ref}>
       <HiEllipsisVertical />
     </StyledToggle>
   );
 }
 
 function List({ id, children }) {
-  const { openId, position, close } = useContext(MenusContext);
+  const { openId, position, setPosition, close, buttonRef } =
+    useContext(MenusContext);
   const ref = useOutsideClick(close);
+
+  useEffect(() => {
+    if (openId !== id || !buttonRef?.current) return;
+
+    function updatePosition() {
+      const rect = buttonRef.current.getBoundingClientRect();
+      setPosition({
+        x: window.innerWidth - rect.width - rect.x,
+        y: rect.y + rect.height + 8,
+      });
+    }
+    updatePosition();
+    window.addEventListener("resize", updatePosition);
+    window.addEventListener("scroll", updatePosition, true);
+    return () => {
+      window.removeEventListener("resize", updatePosition);
+      window.removeEventListener("scroll", updatePosition, true);
+    };
+  }, [buttonRef, id, openId, setPosition]);
+
   if (openId !== id) return null;
   return createPortal(
     <StyledList position={position} ref={ref}>
