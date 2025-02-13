@@ -45,7 +45,7 @@ export default function CabinTable() {
     filteredCabins = cabins?.filter((cabin) => cabin.discount > 0);
 
   // 2. sort
-  console.log(filteredCabins);
+  // console.log(filteredCabins);
   const sortValue = searchParams.get("sortBy") || "name-asc";
   const [field, direction] = sortValue.split("-");
   const modifier = direction === "asc" ? 1 : -1;
