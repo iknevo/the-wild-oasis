@@ -1,8 +1,8 @@
+import CabinTableOperations from "../features/cabins/CabinTableOperations.jsx";
 import Heading from "../ui/Heading";
 import Row from "../ui/Row";
 import CabinTable from "./../features/cabins/CabinTable.jsx";
 import AddCabin from "./AddCabin.jsx";
-import CabinTableOperations from "./CabinTableOperations.jsx";
 
 function Cabins() {
   return (

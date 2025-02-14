@@ -1,6 +1,6 @@
-import TableOperations from "./../ui/TableOperations.jsx";
-import Filter from "./../ui/Filter.jsx";
-import SortBy from "../ui/SortBy.jsx";
+import Filter from "../../ui/Filter.jsx";
+import SortBy from "../../ui/SortBy.jsx";
+import TableOperations from "./../../ui/TableOperations.jsx";
 
 const filterOptions = [
   { value: "all", label: "All" },
