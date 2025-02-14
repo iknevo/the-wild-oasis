@@ -14,14 +14,16 @@ export function useBookings() {
   const sortValue = searchParams.get("sortBy") || "startDate-desc";
   const [field, direction] = sortValue.split("-");
   const sortBy = { field, direction };
+  // pagination
+  const page = !searchParams.get("page") ? 1 : +searchParams.get("page");
 
   const {
-    data: bookings,
+    data: { data: bookings, count } = {},
     error,
     isLoading,
   } = useQuery({
-    queryKey: ["bookings", filter, sortBy],
-    queryFn: () => getAllBookings(filter, sortBy),
+    queryKey: ["bookings", filter, sortBy, page],
+    queryFn: () => getAllBookings(filter, sortBy, page),
   });
-  return { bookings, error, isLoading };
+  return { bookings, count, error, isLoading };
 }
