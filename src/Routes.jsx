@@ -10,6 +10,7 @@ import Users from "./pages/Users.jsx";
 import PageNotFound from "./pages/PageNotFound.jsx";
 import AppLayout from "./ui/AppLayout.jsx";
 import Booking from "./pages/Booking.jsx";
+import Checkin from "./pages/Checkin.jsx";
 
 const Router = createBrowserRouter([
   {
@@ -28,8 +29,12 @@ const Router = createBrowserRouter([
         element: <Bookings />,
       },
       {
-        path: "/bookings/:bookingId",
+        path: "bookings/:bookingId",
         element: <Booking />,
+      },
+      {
+        path: "checkin/:bookingId",
+        element: <Checkin />,
       },
       {
         path: "cabins",

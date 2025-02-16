@@ -89,7 +89,7 @@ export default function CabinRow({ cabin }) {
         <div>
           <Modal>
             <Menus.Menu>
-              <Menus.Toogle id={cabinId} />
+              <Menus.Toggle id={cabinId} />
 
               <Menus.List id={cabinId}>
                 <Menus.Button
