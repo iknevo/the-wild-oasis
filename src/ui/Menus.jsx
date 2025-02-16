@@ -164,7 +164,7 @@ function Button({ children, icon, onClick }) {
 }
 
 Menus.Menu = StyledMenu;
-Menus.Toogle = Toogle;
+Menus.Toggle = Toogle;
 Menus.List = List;
 Menus.Button = Button;
 

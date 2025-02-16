@@ -9,6 +9,7 @@ import Settings from "./pages/Settings.jsx";
 import Users from "./pages/Users.jsx";
 import PageNotFound from "./pages/PageNotFound.jsx";
 import AppLayout from "./ui/AppLayout.jsx";
+import Booking from "./pages/Booking.jsx";
 
 const Router = createBrowserRouter([
   {
@@ -25,6 +26,10 @@ const Router = createBrowserRouter([
       {
         path: "bookings",
         element: <Bookings />,
+      },
+      {
+        path: "/bookings/:bookingId",
+        element: <Booking />,
       },
       {
         path: "cabins",

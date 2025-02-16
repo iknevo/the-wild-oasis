@@ -52,7 +52,7 @@ const Discount = styled.div`
 export default function CabinRow({ cabin }) {
   const {
     name,
-    id: cabinID,
+    id: cabinId,
     description,
     maxCapacity,
     regularPrice,
@@ -89,9 +89,9 @@ export default function CabinRow({ cabin }) {
         <div>
           <Modal>
             <Menus.Menu>
-              <Menus.Toogle id={cabinID} />
+              <Menus.Toogle id={cabinId} />
 
-              <Menus.List id={cabinID}>
+              <Menus.List id={cabinId}>
                 <Menus.Button
                   icon={<HiSquare2Stack />}
                   onClick={handleDuplicate}
@@ -114,7 +114,7 @@ export default function CabinRow({ cabin }) {
                 <ConfirmDelete
                   resourceName="cabin"
                   disabled={isDeleting}
-                  onConfirm={() => deleteCabin(cabinID)}
+                  onConfirm={() => deleteCabin(cabinId)}
                 />
               </Modal.Window>
             </Menus.Menu>
