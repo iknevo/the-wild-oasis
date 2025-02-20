@@ -2,7 +2,7 @@ import { RESULTS_PER_PAGE } from "../utils/constants";
 import { getToday } from "../utils/helpers";
 import supabase from "./supabase";
 
-export async function getAllBookings(filter, sortBy, page) {
+export async function getAllBookings({ filter, sortBy, page }) {
   let query = supabase
     .from("bookings")
     .select(

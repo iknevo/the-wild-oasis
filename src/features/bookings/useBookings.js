@@ -29,7 +29,7 @@ export function useBookings() {
     isLoading,
   } = useQuery({
     queryKey: ["bookings", filter, sortBy, page],
-    queryFn: () => getAllBookings(filter, sortBy, page),
+    queryFn: () => getAllBookings({ filter, sortBy, page }),
   });
 
   // PREFETCHING
@@ -37,7 +37,7 @@ export function useBookings() {
   if (page < numPages) {
     queryClient.prefetchQuery({
       queryKey: ["bookings", filter, sortBy, page + 1],
-      queryFn: () => getAllBookings(filter, sortBy, page),
+      queryFn: () => getAllBookings({ filter, sortBy, page: page + 1 }),
     });
   }
 
