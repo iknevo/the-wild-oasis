@@ -7,8 +7,8 @@ import { useLogin } from "./useLogin";
 import SpinnerMini from "./../../ui/SpinnerMini.jsx";
 
 function LoginForm() {
-  const [email, setEmail] = useState("nevo@example.com");
-  const [password, setPassword] = useState("1234pass");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [passwordShown, setPasswordShow] = useState(false);
   const { login, isLogingIn } = useLogin();
 
@@ -29,6 +29,11 @@ function LoginForm() {
   function handleShowPassword(e) {
     e.preventDefault();
     setPasswordShow((shown) => !shown);
+  }
+  function handleGuestValues(e) {
+    e.preventDefault();
+    setEmail("nevo@example.com");
+    setPassword("1234pass");
   }
 
   return (
@@ -55,9 +60,20 @@ function LoginForm() {
             onChange={(e) => setPassword(e.target.value)}
           />
         </FormRowVertical>
-        <Button size="small" onClick={handleShowPassword}>
-          show
-        </Button>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <Button size="small" onClick={handleGuestValues}>
+            use guest
+          </Button>
+          <Button size="small" onClick={handleShowPassword}>
+            show password
+          </Button>
+        </div>
       </div>
       <FormRowVertical>
         <Button type="submit" size="large" disabled={isLogingIn}>

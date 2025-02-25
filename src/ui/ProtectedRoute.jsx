@@ -19,7 +19,7 @@ export default function ProtectedRoute({ children }) {
   const { isAuthenticated, isLoading } = useUser();
 
   useEffect(() => {
-    if (!isAuthenticated && !isLoading) navigate("/login");
+    if (!isAuthenticated && !isLoading) navigate("/login", { replace: true });
   }, [isAuthenticated, isLoading, navigate]);
 
   if (isLoading)
