@@ -1,11 +1,11 @@
-import { RouterProvider } from "react-router-dom";
-import Router from "./Routes.jsx";
-import GlobalStyles from "./styles/GlobalStyles";
+import isPropValid from "@emotion/is-prop-valid";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Toaster } from "react-hot-toast";
+import { RouterProvider } from "react-router-dom";
 import { StyleSheetManager } from "styled-components";
-import isPropValid from "@emotion/is-prop-valid";
+import Router from "./Routes.jsx";
+import GlobalStyles from "./styles/GlobalStyles";
 
 const queryClient = new QueryClient({
   DefaultOptions: {

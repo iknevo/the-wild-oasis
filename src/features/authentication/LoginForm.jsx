@@ -1,10 +1,10 @@
 import { useState } from "react";
 import Button from "../../ui/Button";
 import Form from "../../ui/Form";
-import Input from "../../ui/Input";
 import FormRowVertical from "../../ui/FormRowVertical";
-import { useLogin } from "./useLogin";
+import Input from "../../ui/Input";
 import SpinnerMini from "./../../ui/SpinnerMini.jsx";
+import { useLogin } from "./useLogin";
 
 function LoginForm() {
   const [email, setEmail] = useState("");
@@ -33,7 +33,7 @@ function LoginForm() {
   function handleGuestValues(e) {
     e.preventDefault();
     setEmail("nevo@example.com");
-    setPassword("1234pass");
+    setPassword("11111111");
   }
 
   return (

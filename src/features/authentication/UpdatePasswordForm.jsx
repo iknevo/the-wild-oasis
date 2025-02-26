@@ -4,16 +4,36 @@ import Form from "../../ui/Form";
 import FormRow from "../../ui/FormRow";
 import Input from "../../ui/Input";
 
+import toast from "react-hot-toast";
 import { useUpdateUser } from "./useUpdateUser";
+import { useUser } from "./useUser";
 
 function UpdatePasswordForm() {
   const { register, handleSubmit, formState, getValues, reset } = useForm();
   const { errors } = formState;
+  const {
+    user: {
+      user_metadata: { fullName: currentFullName },
+    },
+  } = useUser();
 
   const { updateUser, isUpdating } = useUpdateUser();
 
   function onSubmit({ password }) {
-    updateUser({ password }, { onSuccess: reset });
+    if (currentFullName === "Guest") {
+      toast.error(
+        "you can't change the guest user info! try adding a new user and login with it"
+      );
+      return;
+    }
+    updateUser(
+      { password },
+      {
+        onSuccess: () => {
+          reset();
+        },
+      }
+    );
   }
 
   return (
