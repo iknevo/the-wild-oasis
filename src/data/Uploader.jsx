@@ -125,6 +125,15 @@ function Uploader() {
     setIsLoading(false);
   }
 
+  async function deleteAll() {
+    setIsLoading(true);
+    // Bookings need to be deleted FIRST
+    await deleteBookings();
+    await deleteGuests();
+    await deleteCabins();
+    setIsLoading(false);
+  }
+
   return (
     <div
       style={{
@@ -147,6 +156,10 @@ function Uploader() {
 
       <Button onClick={uploadBookings} disabled={isLoading}>
         Upload bookings ONLY
+      </Button>
+
+      <Button onClick={deleteAll} disabled={isLoading}>
+        Delete Both
       </Button>
     </div>
   );
