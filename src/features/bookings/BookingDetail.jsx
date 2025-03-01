@@ -1,21 +1,22 @@
 import styled from "styled-components";
 
-import BookingDataBox from "./BookingDataBox";
-import Row from "../../ui/Row";
-import Heading from "../../ui/Heading";
-import Tag from "../../ui/Tag";
-import ButtonGroup from "../../ui/ButtonGroup";
 import Button from "../../ui/Button";
+import ButtonGroup from "../../ui/ButtonGroup";
 import ButtonText from "../../ui/ButtonText";
+import Heading from "../../ui/Heading";
+import Row from "../../ui/Row";
+import Tag from "../../ui/Tag";
+import BookingDataBox from "./BookingDataBox";
 
-import { useMoveBack } from "../../hooks/useMoveBack";
-import { useBooking } from "./useBooking";
-import Spinner from "./../../ui/Spinner.jsx";
-import { useNavigate } from "react-router-dom";
 import { HiArrowUpOnSquare } from "react-icons/hi2";
-import { useCheckOut } from "../check-in-out/useCheckOut.js";
-import Modal from "../../ui/Modal.jsx";
+import { useNavigate } from "react-router-dom";
+import { useMoveBack } from "../../hooks/useMoveBack";
 import ConfirmDelete from "../../ui/ConfirmDelete.jsx";
+import Empty from "../../ui/Empty.jsx";
+import Modal from "../../ui/Modal.jsx";
+import { useCheckOut } from "../check-in-out/useCheckOut.js";
+import Spinner from "./../../ui/Spinner.jsx";
+import { useBooking } from "./useBooking";
 import { useDeleteBooking } from "./useDeleteBooking.js";
 
 const HeadingGroup = styled.div`
@@ -32,6 +33,7 @@ function BookingDetail() {
   const navigate = useNavigate();
 
   if (isLoading) return <Spinner />;
+  if (!booking) return <Empty resourceName="booking" />;
 
   const { status, id: bookingId } = booking;
   const statusToTagName = {
