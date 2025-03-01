@@ -4,16 +4,11 @@ import supabase from "../services/supabase";
 import Button from "../ui/Button";
 import { subtractDates } from "../utils/helpers";
 
+import { useQueryClient } from "@tanstack/react-query";
+import Spinner from "../ui/Spinner";
 import { bookings } from "./data-bookings";
 import { cabins } from "./data-cabins";
 import { guests } from "./data-guests";
-
-// const originalSettings = {
-//   minBookingLength: 3,
-//   maxBookingLength: 30,
-//   maxGuestsPerBooking: 10,
-//   breakfastPrice: 15,
-// };
 
 async function deleteGuests() {
   const { error } = await supabase.from("guests").delete().gt("id", 0);
@@ -94,16 +89,15 @@ async function createBookings() {
     };
   });
 
-  console.log(finalBookings);
-
   const { error } = await supabase.from("bookings").insert(finalBookings);
   if (error) console.log(error.message);
 }
 
 function Uploader() {
   const [isLoading, setIsLoading] = useState(false);
+  const queryClient = useQueryClient();
 
-  async function uploadAll() {
+  async function uploadData() {
     setIsLoading(true);
     // Bookings need to be deleted FIRST
     await deleteBookings();
@@ -115,23 +109,18 @@ function Uploader() {
     await createCabins();
     await createBookings();
 
+    queryClient.invalidateQueries(["bookings", "cabins", "stays"]);
     setIsLoading(false);
   }
 
-  async function uploadBookings() {
-    setIsLoading(true);
-    await deleteBookings();
-    await createBookings();
-    setIsLoading(false);
-  }
-
-  async function deleteAll() {
+  async function deleteData() {
     setIsLoading(true);
     // Bookings need to be deleted FIRST
     await deleteBookings();
     await deleteGuests();
     await deleteCabins();
     setIsLoading(false);
+    queryClient.invalidateQueries(["bookings", "cabins", "stays"]);
   }
 
   return (
@@ -145,22 +134,30 @@ function Uploader() {
         textAlign: "center",
         display: "flex",
         flexDirection: "column",
+        justifyContent: "space-between",
         gap: "8px",
+        height: "180px",
       }}
     >
       <h3>SAMPLE DATA</h3>
-
-      <Button onClick={uploadAll} disabled={isLoading}>
-        Upload ALL
-      </Button>
-
-      <Button onClick={uploadBookings} disabled={isLoading}>
-        Upload bookings ONLY
-      </Button>
-
-      <Button onClick={deleteAll} disabled={isLoading}>
-        Delete Both
-      </Button>
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "8px",
+          }}
+        >
+          <Button onClick={uploadData} disabled={isLoading}>
+            Upload Data
+          </Button>
+          <Button onClick={deleteData} disabled={isLoading}>
+            Delete Data
+          </Button>
+        </div>
+      )}
     </div>
   );
 }
