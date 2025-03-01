@@ -1,13 +1,10 @@
 /* eslint-disable react/prop-types */
-import styled from "styled-components";
 import { format, isToday } from "date-fns";
+import styled from "styled-components";
 
-import Tag from "../../ui/Tag";
 import Table from "../../ui/Table";
+import Tag from "../../ui/Tag";
 
-import { formatCurrency } from "../../utils/helpers";
-import { formatDistanceFromNow } from "../../utils/helpers";
-import Menus from "../../ui/Menus";
 import {
   HiArrowDownOnSquare,
   HiArrowUpOnSquare,
@@ -15,9 +12,11 @@ import {
   HiTrash,
 } from "react-icons/hi2";
 import { useNavigate } from "react-router-dom";
+import ConfirmDelete from "../../ui/ConfirmDelete.jsx";
+import Menus from "../../ui/Menus";
+import { formatCurrency, formatDistanceFromNow } from "../../utils/helpers";
 import { useCheckOut } from "../check-in-out/useCheckOut";
 import Modal from "./../../ui/Modal.jsx";
-import ConfirmDelete from "../../ui/ConfirmDelete.jsx";
 import { useDeleteBooking } from "./useDeleteBooking.js";
 
 const Cabin = styled.div`
@@ -50,11 +49,9 @@ const Amount = styled.div`
 function BookingRow({
   booking: {
     id: bookingId,
-    created_at,
     startDate,
     endDate,
     numNights,
-    numGuests,
     totalPrice,
     status,
     guests: { fullName: guestName, email },

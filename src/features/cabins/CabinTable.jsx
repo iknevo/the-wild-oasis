@@ -1,11 +1,11 @@
 // import styled from "styled-components";
+import { useSearchParams } from "react-router-dom";
+import Empty from "../../ui/Empty";
+import Menus from "../../ui/Menus";
+import Table from "../../ui/Table";
 import Spinner from "./../../ui/Spinner";
 import CabinRow from "./CabinRow";
 import { useCabins } from "./useCabins";
-import Table from "../../ui/Table";
-import Menus from "../../ui/Menus";
-import { useSearchParams } from "react-router-dom";
-import Empty from "../../ui/Empty";
 
 // const Table = styled.div`
 //   border: 1px solid var(--color-grey-200);

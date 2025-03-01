@@ -79,7 +79,7 @@ export default function Pagination({ numResults }) {
   if (numResults <= RESULTS_PER_PAGE) return null;
   return (
     <StyledPagination>
-      <p>
+      <P>
         showing <span>{(currentPage - 1) * RESULTS_PER_PAGE + 1}</span> to{" "}
         <span>
           {currentPage === numPages
@@ -87,7 +87,7 @@ export default function Pagination({ numResults }) {
             : currentPage * RESULTS_PER_PAGE}
         </span>{" "}
         of <span>{numResults} results</span>
-      </p>
+      </P>
       <Buttons>
         <PaginationButton onClick={prevPage} disabled={currentPage === 1}>
           <HiChevronLeft /> <span>Previous</span>

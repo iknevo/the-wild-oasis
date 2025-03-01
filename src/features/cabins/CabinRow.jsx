@@ -1,14 +1,14 @@
 /* eslint-disable react/prop-types */
+import { HiPencil, HiSquare2Stack, HiTrash } from "react-icons/hi2";
 import styled from "styled-components";
+import ConfirmDelete from "../../ui/ConfirmDelete.jsx";
+import Menus from "../../ui/Menus.jsx";
+import Modal from "../../ui/Modal.jsx";
+import Table from "../../ui/Table.jsx";
 import { formatCurrency } from "./../../utils/helpers.js";
 import CreateCabinForm from "./CreateCabinForm.jsx";
-import { useDeleteCabin } from "./useDeleteCabin.js";
-import { HiPencil, HiSquare2Stack, HiTrash } from "react-icons/hi2";
 import { useCreateCabin } from "./useCreateCabin.js";
-import Modal from "../../ui/Modal.jsx";
-import ConfirmDelete from "../../ui/ConfirmDelete.jsx";
-import Table from "../../ui/Table.jsx";
-import Menus from "../../ui/Menus.jsx";
+import { useDeleteCabin } from "./useDeleteCabin.js";
 
 // const TableRow = styled.div`
 //   display: grid;
