@@ -45,7 +45,7 @@ export default function Stats({
       <Stat
         title="Occupancy rate"
         color="yellow"
-        value={Math.round(ocupation * 100) + "%"}
+        value={ocupation ? Math.round(ocupation * 100) : 0 + "%"}
         icon={<HiOutlineChartBar />}
       />
     </>
